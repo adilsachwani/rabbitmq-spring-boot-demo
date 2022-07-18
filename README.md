@@ -1,1 +1,1 @@
-# rabbitmq-spring-boot-demo
+# RabbitMQ - Spring Boot Demo
