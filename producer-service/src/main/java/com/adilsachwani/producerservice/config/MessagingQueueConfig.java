@@ -11,25 +11,30 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MessagingQueueConfig {
 
+    // Queues
     public static final String CRICKETER_QUEUE = "cricketer_queue";
-    public static final String CRICKETER_EXCHANGE_TOPIC = "cricketer_topic";
-    public static final String CRICKETER_ROUTING_KEY = "cricketer_routing_key";
+
+    // Exchanges
+    public static final String CRICKETER_EXCHANGE = "cricketer_exchange";
+
+    // Routing Keys
+    public static final String CRICKETER_ROUTING_KEY = "cricketer_key";
 
     @Bean
-    public Queue queue(){
+    public Queue cricketerQueue(){
         return new Queue(CRICKETER_QUEUE);
     }
 
     @Bean
-    public TopicExchange topicExchange(){
-        return new TopicExchange(CRICKETER_EXCHANGE_TOPIC);
+    public DirectExchange exchange(){
+        return new DirectExchange(CRICKETER_EXCHANGE);
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange topicExchange){
+    public Binding binding(Queue cricketerQueue, DirectExchange exchange){
         return BindingBuilder
-                .bind(queue)
-                .to(topicExchange)
+                .bind(cricketerQueue)
+                .to(exchange)
                 .with(CRICKETER_ROUTING_KEY);
     }
 

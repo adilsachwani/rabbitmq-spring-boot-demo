@@ -4,6 +4,7 @@ import com.adilsachwani.producerservice.config.MessagingQueueConfig;
 import com.adilsachwani.producerservice.model.Cricketer;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,11 @@ public class CricketerController {
     private RabbitTemplate template;
 
     @PostMapping
-    public Cricketer publishCricketer(@RequestBody Cricketer cricketer){
+    public ResponseEntity<Void> publishCricketer(@RequestBody Cricketer cricketer){
         cricketer.setId(UUID.randomUUID());
-        template.convertAndSend(MessagingQueueConfig.CRICKETER_EXCHANGE_TOPIC,
+        template.convertAndSend(MessagingQueueConfig.CRICKETER_EXCHANGE,
                 MessagingQueueConfig.CRICKETER_ROUTING_KEY, cricketer);
-        return cricketer;
+        return ResponseEntity.noContent().build();
     }
 
 }
