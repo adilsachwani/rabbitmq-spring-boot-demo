@@ -5,10 +5,7 @@ import com.adilsachwani.producerservice.model.Cricketer;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -24,6 +21,13 @@ public class CricketerController {
         cricketer.setId(UUID.randomUUID());
         template.convertAndSend(MessagingQueueConfig.CRICKETER_EXCHANGE,
                 MessagingQueueConfig.CRICKETER_ROUTING_KEY, cricketer);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/import/{country}")
+    public ResponseEntity<Void> importCricketers(@PathVariable(name = "country") String country){
+        template.convertAndSend(MessagingQueueConfig.CRICKETER_EXCHANGE,
+                MessagingQueueConfig.IMPORT_CRICKETERS_ROUTING_KEY, country);
         return ResponseEntity.noContent().build();
     }
 

@@ -14,9 +14,14 @@ public class CricketerListener {
     private CricketerRepository cricketerRepository;
 
     @RabbitListener(queues = MessagingQueueConfig.CRICKETER_QUEUE)
-    public void addCricketListener(Cricketer cricketer){
+    public void addCricketerListener(Cricketer cricketer){
         System.out.println(cricketer.getName());
         cricketerRepository.save(cricketer);
+    }
+
+    @RabbitListener(queues = MessagingQueueConfig.IMPORT_CRICKETERS_QUEUE)
+    public void importCricketersListener(String country){
+        System.out.println("Import Cricketers - " + country);
     }
 
 }
