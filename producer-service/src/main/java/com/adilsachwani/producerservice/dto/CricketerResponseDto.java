@@ -1,4 +1,4 @@
-package com.adilsachwani.producerservice.model;
+package com.adilsachwani.producerservice.dto;
 
 import com.adilsachwani.producerservice.constant.Gender;
 import lombok.*;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Cricketer {
+public class CricketerResponseDto {
 
     private UUID id;
     private Gender gender;
